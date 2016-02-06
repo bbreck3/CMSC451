@@ -113,7 +113,7 @@ namespace Etherwall {
 
     void TransactionModel::getAccountsDone(const AccountList& list __attribute__((unused))) {
         refresh();
-        loadHistory();
+        //loadHistory();
     }
 
     void TransactionModel::getBlockNumberDone(quint64 num) {

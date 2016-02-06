@@ -623,7 +623,15 @@ namespace Etherwall {
     }
 
     void EtherIPC::bail(bool soft) {
-        qDebug() << "BAIL[" << soft << "]: " << fError << "\n";
+        qDebug() << "BAIL[" << soft << "]: " << fError << "\n"; //thsi looks like the line where the error is occuring, 
+                                                                //fError is aString defind in etheripc.h file and then implemented throughout
+                                                                //ehterip.cpp about 5 times, once to return the error message as a string. 
+                                                                //this method bail is referenced all through the entire project and often used
+                                                                // within a for , while or if else chain. It seems to be utitled catch instances in
+                                                                // the code that will lead to invalid operations in accordance with ehter programming logic 
+                                                                /// or the ehtereum protocol...more often with logic erros on the ethereum protocol that
+                                                                // anything else. the method basically print the error that arrise in the programing in String 
+                                                                // format. The error string is set in a method called "setError" ... later on in the code below
 
         if ( !soft ) {
             fTimer.stop();
