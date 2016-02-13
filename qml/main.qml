@@ -81,6 +81,8 @@ ApplicationWindow {
         LogTab {}
 
         ReceiptsTab {}
+
+        ContractTab {}
     }
 
     statusBar: StatusBar {

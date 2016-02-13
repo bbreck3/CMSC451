@@ -11,6 +11,7 @@
         <file>components/LogTab.qml</file>
         <file>components/TransactionDetails.qml</file>
         <file>components/ReceiptsTab.qml</file>
+        <file>components/ContractTab.qml</file>
     </qresource>
     <qresource prefix="/images">
         <file alias="icon">images/icon.png</file>
