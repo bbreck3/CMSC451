@@ -79,6 +79,8 @@ ApplicationWindow {
         SettingsTab {}
 
         LogTab {}
+
+        ReceiptsTab {}
     }
 
     statusBar: StatusBar {
