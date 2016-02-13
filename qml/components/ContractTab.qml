@@ -10,7 +10,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
-
+//import QtQuick.Controls.Styles 1.4
 Tab{
 
     //Sets up the tab
@@ -18,8 +18,74 @@ Tab{
     enabled: !ipc.busy && (ipc.connectionState > 0)
     title: qsTr("Contacts")
 
+   /**Button and TextField area: Continas the buttons and textfields for the items tha
+   that the distrubutor wants to sell
+
+    */
+
+    Column {
+           id: col1
+           anchors.margins: 20
+           anchors.fill: parent
+
+    //Columms that holds the Labels for the items that the distributer wants to sell
+    ColumnLayout {
+               Label {
+                   id: item1
+                   text: qsTr("Item 1")
+
+               }
+               Label {
+                   id: items2
+                   text: qsTr("Item 2")
+
+               }
+               Label {
+                   id: items3
+                   text: qsTr("Item 3")
+
+               }
+               Label {
+                   id: items4
+                   text: qsTr("Item 4")
+
+               }
+
+           }//End ColumnLayout
+
+
+    //Column that holds the TextFields where the employer can input information to send to to contract
+    ColumnLayout {
+
+               TextField {
+                   id: item5
+
+
+               }
+               TextField {
+                   id: items6
+
+               }
+               TextField {
+                   id: items7
+
+
+               }
+               TextField {
+                   id: items8
+
+
+               }
+
+           }//End ColumnLayout
+
+
+
+
+
     //adds  tableView to view the reciept elements...
     //elements will be added at a later date
+
 
     TableView {
                id: recieptView
@@ -69,6 +135,6 @@ Tab{
 
 
 
-
+        }//End Column
     }//End TableView
 }//End Receipts
