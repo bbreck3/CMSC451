@@ -30,6 +30,7 @@
 #include "clipboard.h"
 #include "accountmodel.h"
 #include "transactionmodel.h"
+#include "contractmodel.h"
 
 using namespace Etherwall;
 
@@ -59,6 +60,7 @@ int main(int argc, char *argv[])
     }
 
     AccountModel accountModel(ipc);
+    ContractModel contractModel(ipc);
     TransactionModel transactionModel(ipc, accountModel);
 
     QQmlApplicationEngine engine;
@@ -69,6 +71,8 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("transactionModel", &transactionModel);
     engine.rootContext()->setContextProperty("clipboard", &clipboard);
     engine.rootContext()->setContextProperty("log", &log);
+
+    engine.rootContext()->setContextProperty("contractModel", &contractModel);
 
     engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
 

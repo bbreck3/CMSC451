@@ -10,6 +10,8 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
+//import QtQuick.Dialogs 1.2
+
 //import QtQuick.Controls.Styles 1.4
 Tab{
 
@@ -58,7 +60,7 @@ Tab{
     ColumnLayout {
 
                TextField {
-                   id: item5
+                   id: items5
 
 
                }
@@ -73,9 +75,51 @@ Tab{
                }
                TextField {
                    id: items8
-
-
                }
+             Button{
+                 id: newAccountButton
+                 //id: accountNewDialog //works: changed id
+                 text: qsTr("Debug")
+                 onClicked: {
+                    //accountNewDialog.openFocused("New account password")
+
+                    contractModel.selectedAccountRow = items5.text.toString(); //this needs be changed to make sence
+                    contractModel.selectedAccountRow1 = items6.text.toString();
+                    contractModel.selectedAccountRow2 = items7.text.toString();
+                    contractModel.selectedAccountRow3 = items8.text.toString();
+
+
+
+
+
+                 }
+               }
+
+
+
+
+         /*PasswordDialog {
+             id: accountNewDialog //works: changed id
+
+             acceptEmpty: false
+
+             onAccepted: {
+                 accountModel.newAccount(password)
+             }
+         }*/
+
+        /*MessageDialog {
+             id: accountNewDialog //works: changed id
+
+             title: "May I have your attention please"
+             text: "It's so cool that you are using Qt Quick."
+             onAccepted: {
+                 console.log("And of course you could only agree.")
+                // Qt.quit()
+             }
+             Component.onCompleted: visible = true
+         }*/
+
 
            }//End ColumnLayout
 
@@ -135,6 +179,8 @@ Tab{
 
 
 
-        }//End Column
-    }//End TableView
+    }//End Column
+    }
+
+    //End TableView
 }//End Receipts
