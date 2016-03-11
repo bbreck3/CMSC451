@@ -132,7 +132,11 @@ namespace Etherwall {
         GasRole,
         GasPriceRole,
         InputRole,
-        DepthRole
+        DepthRole,
+        NameRole,
+        ItemRole,
+        DescRole
+
     };
 
     class TransactionInfo
@@ -141,16 +145,28 @@ namespace Etherwall {
         TransactionInfo();
         TransactionInfo(const QJsonObject& source);
         TransactionInfo(const QString& hash, quint64 blockNum); // for storing from server reply
+        TransactionInfo(const QString& item1,QString& item2, QString& item3, QString& item4, QString item5);
+        TransactionInfo(const QString& from, const QString& to, const QString& value, const QString& gas, const QString& name, const QString& item, const QString& desc);
+        TransactionInfo(const QString& from, const QString& to, const QString& value, const QString& gas, const QString& name);
+        TransactionInfo(const QString& from, const QString& to, const QString& value, const QString& gas);
+
+
 
         const QVariant value(const int role) const;
         quint64 getBlockNumber() const;
         void setBlockNumber(quint64 num);
         const QString getHash() const;
         void setHash(const QString& hash);
-        void init(const QString& from, const QString& to, const QString& value, const QString& gas = QString());
+       // void init(const QString& from, const QString& to, const QString& value, const QString& gas);//, const QString& name, const QString& item, const QString& desc = QString());
+        void init(const QString& from, const QString& to, const QString& value, const QString& gas, const QString& name);
         const QJsonObject toJson(bool decimal = false) const;
         const QString toJsonString(bool decimal = false) const;
     private:
+        QString item1;
+        QString item2;
+        QString item3;
+        QString item4;
+        QString item5;
         QString fHash;
         quint64 fNonce;
         QString fSender;
@@ -162,6 +178,9 @@ namespace Etherwall {
         QString fGas;
         QString fGasPrice;
         QString fInput;
+        QString fName;
+        QString fItem;
+        QString fDesc;
     };
 
     typedef QList<TransactionInfo> TransactionList;

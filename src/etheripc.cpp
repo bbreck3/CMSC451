@@ -137,6 +137,7 @@ namespace Etherwall {
 
         fSocket.connectToServer(path);
         EtherLog::logMsg("Connecting to IPC socket");
+        qDebug() << "Debug-->Connected to IPC Socket";
 
         QTimer::singleShot(2000, this, SLOT(connectionTimeout()));
     }
@@ -330,7 +331,7 @@ namespace Etherwall {
         done();
     }
 
-    void EtherIPC::sendTransaction(const QString& from, const QString& to, const QString& valStr, const QString& gas) {
+    void EtherIPC::sendTransaction(const QString& from, const QString& to, const QString& valStr, const QString& gas, const QString& name, const QString& prodId, const QString& sNum, const QString& item, const QString& desc){
         QJsonArray params;
         const QString valHex = Helpers::toHexWeiStr(valStr);
         EtherLog::logMsg(QString("Trans Value: ") + valStr + QString(" HexValue: ") + valHex);
@@ -339,6 +340,11 @@ namespace Etherwall {
         p["from"] = from;
         p["to"] = to;
         p["value"] = valHex;
+        p["name"] = name;
+        p["prodId"]=prodId;
+        p["sNum"]=sNum;
+        p["item"] = item;
+        p["desc"] = desc;
         if ( !gas.isEmpty() ) {
             const QString gasHex = Helpers::decStrToHexStr(gas);
             p["gas"] = gasHex;

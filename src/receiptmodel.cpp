@@ -19,6 +19,7 @@
  */
 
 #include "transactionmodel.h"
+#include "receiptmodel.h"
 #include <QDebug>
 #include <QJsonArray>
 #include <QJsonValue>
@@ -28,165 +29,34 @@
 
 namespace Etherwall {
 
-    TransactionModel::TransactionModel(EtherIPC& ipc, const AccountModel& accountModel) :
+    ReceiptModel::ReceiptModel(EtherIPC& ipc, const AccountModel& accountModel) :
         QAbstractListModel(0), fIpc(ipc), fAccountModel(accountModel), fBlockNumber(0), fGasPrice("unknown"), fGasEstimate("unknown"), fNetManager(this)
     {
-        connect(&ipc, &EtherIPC::connectToServerDone, this, &TransactionModel::connectToServerDone);
-        connect(&ipc, &EtherIPC::getAccountsDone, this, &TransactionModel::getAccountsDone);
-        connect(&ipc, &EtherIPC::getBlockNumberDone, this, &TransactionModel::getBlockNumberDone);
-        connect(&ipc, &EtherIPC::getGasPriceDone, this, &TransactionModel::getGasPriceDone);
-        connect(&ipc, &EtherIPC::estimateGasDone, this, &TransactionModel::estimateGasDone);
-        connect(&ipc, &EtherIPC::sendTransactionDone, this, &TransactionModel::sendTransactionDone);
-        connect(&ipc, &EtherIPC::newTransaction, this, &TransactionModel::newTransaction);
-        connect(&ipc, &EtherIPC::newBlock, this, &TransactionModel::newBlock);
+        connect(&ipc, &EtherIPC::connectToServerDone, this, &ReceiptModel::connectToServerDone);
+        connect(&ipc, &EtherIPC::getAccountsDone, this, &ReceiptModel::getAccountsDone);
+        connect(&ipc, &EtherIPC::getBlockNumberDone, this, &ReceiptModel::getBlockNumberDone);
+        connect(&ipc, &EtherIPC::getGasPriceDone, this, &ReceiptModel::getGasPriceDone);
+        connect(&ipc, &EtherIPC::estimateGasDone, this, &ReceiptModel::estimateGasDone);
+        connect(&ipc, &EtherIPC::sendTransactionDone, this, &ReceiptModel::sendTransactionDone);
+        connect(&ipc, &EtherIPC::newTransaction, this, &ReceiptModel::newTransaction);
+        connect(&ipc, &EtherIPC::newBlock, this, &ReceiptModel::newBlock);
 
         connect(&fNetManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(loadHistoryDone(QNetworkReply*)));
     }
 
-
-    /**
-     * @brief ContractModel::getSelectedAccountRow
-     * @return
-     *
-     *  TextField input Stuff.....from Distributor
-     *
-     */
-
-
-    QString TransactionModel::getSelectedAccountRow() const {
-        return fSelectedAccountRow;
-    }
-
-    QString TransactionModel::getSelectedAccountRow1() const {
-        return fSelectedAccountRow1;
-    }
-    QString TransactionModel::getSelectedAccountRow2() const {
-        return fSelectedAccountRow2;
-    }
-
-    QString TransactionModel::getSelectedAccountRow3() const {
-        return fSelectedAccountRow3;
-    }
-    QString TransactionModel::getSelectedAccountRow4() const {
-        return fSelectedAccountRow4;
-    }
-
-
-    void TransactionModel::setSelectedAccountRow(QString item) {
-        fSelectedAccountRow = item;
-        qDebug()<< "Debug: item1: -->" << fSelectedAccountRow;
-    }
-
-    void TransactionModel::setSelectedAccountRow1(QString item) {
-        fSelectedAccountRow1 = item;
-        qDebug()<< "Debug: item2: -->" << fSelectedAccountRow1;
-    }
-
-    void TransactionModel::setSelectedAccountRow2(QString item) {
-        fSelectedAccountRow2 = item;
-        qDebug()<< "Debug: item1: -->" << fSelectedAccountRow2;
-    }
-
-    void TransactionModel::setSelectedAccountRow3(QString item) {
-        fSelectedAccountRow3 = item;
-        qDebug()<< "Debug: item3: -->" << fSelectedAccountRow3;
-    }
-    void TransactionModel::setSelectedAccountRow4(QString item) {
-        fSelectedAccountRow4 = item;
-        qDebug()<< "Debug: item4: -->" << fSelectedAccountRow4;
-    }
-    const QString TransactionModel::getSelectedAccount() const {
-        return fSelectedAccountRow;
-    }
-    const QString TransactionModel::getSelectedAccount1() const {
-        return fSelectedAccountRow1;
-    }
-
-    const QString TransactionModel::getSelectedAccount2() const {
-        return fSelectedAccountRow2;
-    }
-    const QString TransactionModel::getSelectedAccount3() const {
-        return fSelectedAccountRow3;
-    }
-    const QString TransactionModel::getSelectedAccount4() const {
-        return fSelectedAccountRow4;
-    }
-
-
-
-    /**
-     * End textfield input for Distributor
-     */
-
-
-
-    /**
-     *     Begin Customer info
-     */
-
-
-    QString TransactionModel::getToString() const {
-        return fto;
-    }
-    QString TransactionModel::getFromString() const {
-        return ffrom;
-    }
-    QString TransactionModel::getAmountString() const {
-        return famount;
-    }
-    QString TransactionModel::getGasString() const{
-        return fgas;
-    }
-
-
-    void TransactionModel::setToString(QString to) {
-        fto=to;
-        qDebug()<< "Debug: to: -->" << fto;
-    }
-    void TransactionModel::setFromString(QString from) {
-        ffrom=from;
-        qDebug()<< "Debug: from: -->" << ffrom;
-    }
-    void TransactionModel::setAmountString(QString amount) {
-        famount=amount;
-        qDebug()<< "Debug: amount: -->" << famount;
-    }
-    void TransactionModel::setGasString(QString gas) {
-        fgas=gas;
-        qDebug()<< "Debug: amount: -->" << fgas;
-    }
-
-
-    const QString TransactionModel::getTo() const {
-        return fto;
-    }
-    const QString TransactionModel::getFrom() const {
-        return ffrom;
-    }
-    const QString TransactionModel::getAmount() const {
-        return famount;
-    }
-    const QString TransactionModel::getGasPriceStr() const {
-        return fgas;
-    }
-    
-
-
-
-
-    quint64 TransactionModel::getBlockNumber() const {
+    quint64 ReceiptModel::getBlockNumber() const {
         return fBlockNumber;
     }
 
-    const QString& TransactionModel::getGasPrice() const {
+    const QString& ReceiptModel::getGasPrice() const {
         return fGasPrice;
     }
 
-    const QString& TransactionModel::getGasEstimate() const {
+    const QString& ReceiptModel::getGasEstimate() const {
         return fGasEstimate;
     }
 
-    QHash<int, QByteArray> TransactionModel::roleNames() const {
+    QHash<int, QByteArray> ReceiptModel::roleNames() const {
         QHash<int, QByteArray> roles;
         roles[THashRole] = "hash";
         roles[NonceRole] = "nonce";
@@ -200,18 +70,15 @@ namespace Etherwall {
         roles[GasPriceRole] = "gasprice";
         roles[InputRole] = "input";
         roles[DepthRole] = "depth";
-        roles[NameRole] = "name";
-        roles[ItemRole] = "item";
-        roles[DescRole] = "desc";
 
         return roles;
     }
 
-    int TransactionModel::rowCount(const QModelIndex & parent __attribute__ ((unused))) const {
+    int ReceiptModel::rowCount(const QModelIndex & parent __attribute__ ((unused))) const {
         return fTransactionList.size();
     }
 
-    QVariant TransactionModel::data(const QModelIndex & index, int role) const {
+    QVariant ReceiptModel::data(const QModelIndex & index, int role) const {
         const int row = index.row();
 
         // calculate distance from current block
@@ -228,7 +95,7 @@ namespace Etherwall {
         return fTransactionList.at(row).value(role);
     }
 
-    int TransactionModel::containsTransaction(const QString& hash) {
+    int ReceiptModel::containsTransaction(const QString& hash) {
         int i = 0;
         foreach ( const TransactionInfo& t, fTransactionList ) {
             if ( t.value(THashRole).toString() == hash ) {
@@ -240,18 +107,18 @@ namespace Etherwall {
         return -1;
     }
 
-    void TransactionModel::connectToServerDone() {
+    void ReceiptModel::connectToServerDone() {
         fIpc.getBlockNumber();
         fIpc.getGasPrice();
     }
 
-    void TransactionModel::getAccountsDone(const AccountList& list __attribute__((unused))) {
-        //refresh();
+    void ReceiptModel::getAccountsDone(const AccountList& list __attribute__((unused))) {
+        refresh();
         //loadHistory();
     }
 
-    void TransactionModel::getBlockNumberDone(quint64 num) {
-       if ( num <= fBlockNumber ) {
+    void ReceiptModel::getBlockNumberDone(quint64 num) {
+        if ( num <= fBlockNumber ) {
             return;
         }
 
@@ -265,61 +132,33 @@ namespace Etherwall {
         }
     }
 
-    void TransactionModel::getGasPriceDone(const QString& num) {
+    void ReceiptModel::getGasPriceDone(const QString& num) {
         fGasPrice = num;
         emit gasPriceChanged(num);
     }
 
-    void TransactionModel::estimateGasDone(const QString& num) {
+    void ReceiptModel::estimateGasDone(const QString& num) {
         fGasEstimate = num;
         emit gasEstimateChanged(num);
     }
 
-    void TransactionModel::sendTransaction(const QString& name, const QString& prod_id, const QString& sNum, const QString& item, const QString& desc){//, const QString& item, const QString& description) {
-        QString from = getFrom();
-        QString to = getTo();
-        QString gas = getGasPriceStr();
-        QString value  = getAmount();
+    /*void ReceiptModel::sendTransaction(const QString& from, const QString& to, const QString& value, const QString& gas) {
+        fIpc.sendTransaction(from, to, value, gas);
+        fQueuedTransaction.init(from, to, value, gas);
+    }*/
 
-        qDebug() <<"Debug-->" << from << to << value <<  gas << name << prod_id << item << desc;// <<  name << item << description;
-
-        fIpc.sendTransaction(from, to, value, gas, name, prod_id, sNum, item,desc);//, name, item, description );
-
-
-        fQueuedTransaction.init(from, to, value, gas, name);//, name, item, description);
-    }
-    void TransactionModel::prepSendTransaction(const QString& from, const QString& to, const QString& value, const QString& gas){//, const QString& item, const QString& description) {
-            setToString(to);
-            setFromString(from);
-            setAmountString(value);
-            setGasString(gas);
-            //THis might break it
-        qDebug() <<"Debug-->" << from << to << value <<  gas;// <<  name << item << description;
-
-
-    }
-
-
-
-    void TransactionModel::sendTransactionDone(const QString& hash) {
+    void ReceiptModel::sendTransactionDone(const QString& hash) {
         fQueuedTransaction.setHash(hash);
         addTransaction(fQueuedTransaction);
         EtherLog::logMsg("Transaction sent hash: " + hash);
     }
 
-    void TransactionModel::newTransaction(const TransactionInfo &info) {
+    void ReceiptModel::newTransaction(const TransactionInfo &info) {
         int ai1, ai2;
         const QString& sender = info.value(SenderRole).toString();
         const QString& receiver = info.value(ReceiverRole).toString();
-        const QString& name = info.value(NameRole).toString();
-        qDebug() << "Debug name-->" << name;
-        qDebug() << "Debug sener -->" << sender;
-        qDebug() << "Debug receiever -->" << receiver;
-
         if ( fAccountModel.containsAccount(sender, receiver, ai1, ai2) ) { // either our sent or someone sent to us
             const int n = containsTransaction(info.value(THashRole).toString());
-            qDebug() << "Value of n -->" << n ;
-
             if ( n >= 0 ) { // ours
                 fTransactionList[n] = info;
                 const QModelIndex& leftIndex = QAbstractListModel::createIndex(n, 0);
@@ -327,18 +166,38 @@ namespace Etherwall {
                 emit dataChanged(leftIndex, rightIndex);
                 storeTransaction(fTransactionList.at(n));
             } else { // external from someone to us
-                /**
-                        The below line is where the information gets added to the table...
-
-
-
-                  */
                 addTransaction(info);
             }
         }
     }
 
-    void TransactionModel::newBlock(const QJsonObject& block) {
+    /*void ReceiptModel::readfile(QString fe){
+        QString fileName = "/home/adam/Desktop/test.txt";
+        QFile file(fileName);
+
+        if(!file.exists()){
+               qDebug() << "NO existe el archivo "<<filename;
+           }else{
+               qDebug() << filename<<" encontrado...";
+           }
+           QString line;
+           ui->textEdit->clear();
+           if (file.open(QIODevice::ReadOnly | QIODevice::Text)){
+               QTextStream stream(&file);
+               while (!stream.atEnd()){
+                   line = stream.readLine();
+                   ui->textEdit->setText(ui->textEdit->toPlainText()+line+"\n");
+                   qDebug() << "linea: "<<line;
+               }
+           }
+           file.close();
+
+
+    }*/
+
+
+
+    void ReceiptModel::newBlock(const QJsonObject& block) {
         const QJsonArray transactions = block.value("transactions").toArray();
         const quint64 blockNum = Helpers::toQUInt64(block.value("number"));
 
@@ -351,7 +210,6 @@ namespace Etherwall {
             const QString thash = to.value("hash").toString();
             const QString sender = to.value("from").toString();
             const QString receiver = to.value("to").toString();
-            const QString name = to.value("name").toString();
             int i1, i2;
 
             const int n = containsTransaction(thash);
@@ -370,7 +228,7 @@ namespace Etherwall {
         }
     }
 
-    int TransactionModel::getInsertIndex(const TransactionInfo& info) const {
+    int ReceiptModel::getInsertIndex(const TransactionInfo& info) const {
         const quint64 block = info.value(BlockNumberRole).toULongLong();
 
         if ( block == 0 ) {
@@ -387,22 +245,16 @@ namespace Etherwall {
         return fTransactionList.length();
     }
 
-    void TransactionModel::addTransaction(const TransactionInfo& info) {
-
+    void ReceiptModel::addTransaction(const TransactionInfo& info) {
         const int index = getInsertIndex(info);
         beginInsertRows(QModelIndex(), index, index);
-        /**
-         *
-         *  this adds stuff to the list--> the transactionlist...
-         *
-         * */
         fTransactionList.insert(index, info);
         endInsertRows();
 
         storeTransaction(info);
     }
 
-    void TransactionModel::storeTransaction(const TransactionInfo& info) {
+    void ReceiptModel::storeTransaction(const TransactionInfo& info) {
         // save to persistent memory for re-run
         const quint64 blockNum = info.value(BlockNumberRole).toULongLong();
         QSettings settings;
@@ -411,7 +263,7 @@ namespace Etherwall {
         settings.endGroup();
     }
 
-    void TransactionModel::refresh() {
+    void ReceiptModel::refresh() {
         QSettings settings;
         settings.beginGroup("transactions");
         QStringList list = settings.allKeys();
@@ -440,7 +292,7 @@ namespace Etherwall {
         settings.endGroup();
     }
 
-    const QString TransactionModel::estimateTotal(const QString& value, const QString& gas) const {
+    const QString ReceiptModel::estimateTotal(const QString& value, const QString& gas) const {
         BigInt::Rossi valRossi = Helpers::etherStrToRossi(value);
         BigInt::Rossi valGas = Helpers::decStrToRossi(gas);
         BigInt::Rossi valGasPrice = Helpers::etherStrToRossi(fGasPrice);
@@ -454,7 +306,7 @@ namespace Etherwall {
         return Helpers::weiStrToEtherStr(wei);
     }
 
-    const QString TransactionModel::getSender(int index) const {
+    const QString ReceiptModel::getSender(int index) const {
         if ( index >= 0 && index < fTransactionList.length() ) {
             return fTransactionList.at(index).value(SenderRole).toString();
         }
@@ -462,7 +314,7 @@ namespace Etherwall {
         return QString();
     }
 
-    const QString TransactionModel::getReceiver(int index) const {
+    const QString ReceiptModel::getReceiver(int index) const {
         if ( index >= 0 && index < fTransactionList.length() ) {
             return fTransactionList.at(index).value(ReceiverRole).toString();
         }
@@ -470,15 +322,15 @@ namespace Etherwall {
         return QString();
     }
 
-    const QJsonObject TransactionModel::getJson(int index, bool decimal) const {
-       if ( index < 0 || index >= fTransactionList.length() ) {
+    const QJsonObject ReceiptModel::getJson(int index, bool decimal) const {
+        if ( index < 0 || index >= fTransactionList.length() ) {
             return QJsonObject();
         }
 
         return fTransactionList.at(index).toJson(decimal);
     }
 
-    const QString TransactionModel::getMaxValue(int row, const QString& gas) const {
+    const QString ReceiptModel::getMaxValue(int row, const QString& gas) const {
         const QModelIndex index = QAbstractListModel::createIndex(row, 2);
 
         BigInt::Rossi balanceWeiRossi = Helpers::etherStrToRossi( fAccountModel.data(index, BalanceRole).toString() );
@@ -496,7 +348,7 @@ namespace Etherwall {
         return Helpers::weiStrToEtherStr(resultWei);
     }
 
-    void TransactionModel::loadHistory() {
+    void ReceiptModel::loadHistory() {
         // get historical transactions from etherdata
         //QNetworkRequest request(QUrl("http://data.etherwall.com/api/transactions"));
         /*request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -509,7 +361,7 @@ namespace Etherwall {
         fNetManager.post(request, data);*/
     }
 
-    void TransactionModel::loadHistoryDone(QNetworkReply *reply) {
+    void ReceiptModel::loadHistoryDone(QNetworkReply *reply) {
         if ( reply == NULL ) {
             return EtherLog::logMsg("Undefined history reply", LS_Error);
         }

@@ -63,6 +63,7 @@ namespace Etherwall {
         i1 = -1;
         i2 = -1;
         int i = 0;
+
         foreach ( const AccountInfo& a, fAccountList ) {
             const QString addr = a.value(HashRole).toString();
             if ( addr == from ) {
@@ -72,6 +73,7 @@ namespace Etherwall {
             if ( addr == to ) {
                 i2 = i;
             }
+
             i++;
         }
 

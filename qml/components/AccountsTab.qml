@@ -21,6 +21,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.0
+//import QtQuick.Dialogs 1.2
 
 Tab {
     id: accountsTab
@@ -72,32 +73,31 @@ Tab {
             }
         }
 
-        PasswordDialog {
+  /*      PasswordDialog {
             id: accountNewDialog
             acceptEmpty: false
-
             onAccepted: {
                 accountModel.newAccount(password)
             }
-        }
+        }*/
 
-        PasswordDialog {
+       /** PasswordDialog {
             id: accountDeleteDialog
             //standardButtons: StandardButton.Ok | StandardButton.Cancel
 
             onAccepted: {
                 accountModel.deleteAccount(password, accountView.currentRow);
             }
-        }
+        }*/
 
-        PasswordDialog {
+        /**PasswordDialog {
             id: accountUnlockDialog
             //standardButtons: StandardButton.Ok | StandardButton.Cancel
 
             onAccepted: {
                 accountModel.unlockAccount(password, settings.value("ipc/accounts/lockduration", 300), accountView.currentRow)
             }
-        }
+        }*/
 
         TableView {
             id: accountView

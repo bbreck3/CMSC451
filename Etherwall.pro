@@ -13,7 +13,9 @@ SOURCES += src/main.cpp \
     src/bigint.cpp \
     src/transactionmodel.cpp \
     src/clipboard.cpp \
-    src/etherlog.cpp
+    src/etherlog.cpp \
+    src/contractmodel.cpp \
+    src/receiptmodel.cpp
 
 RESOURCES += qml/qml.qrc
 
@@ -40,7 +42,9 @@ HEADERS += \
     src/bigint.h \
     src/transactionmodel.h \
     src/clipboard.h \
-    src/etherlog.h
+    src/etherlog.h \
+    src/contractmodel.h \
+    src/receiptmodel.h
 
 macx {
     ICON=qml/images/icon.icns
@@ -49,3 +53,9 @@ macx {
 win32 {
     RC_ICONS = icon.ico
 }
+
+DISTFILES += \
+    EthereumForm.ui.qml \
+    Ethereum.qml \
+    qml/components/EthForm.ui.qml \
+    qml/components/Eth.qml

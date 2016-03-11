@@ -69,6 +69,7 @@ namespace Etherwall {
         case TransCountRole: return QVariant(fTransCount);
         case LockedRole: return QVariant(isLocked());
         case SummaryRole: return QVariant(fHash + " [" + fBalance + "]" );
+        //case NameRole: return QVariant(fName);
         }
 
         return QVariant();
@@ -134,6 +135,12 @@ namespace Etherwall {
         fGas = Helpers::toDecStr(source.value("gas"));
         fGasPrice = Helpers::toDecStrEther(source.value("gasPrice"));
         fInput = source.value("input").toString("invalid");
+
+
+        //thi is the line that add the data field to the list on the chart
+        fName = source.value("name").toString("name");
+        fItem = source.value("item").toString("item");
+        fDesc = source.value("item").toString("item");
     }
 
     TransactionInfo::TransactionInfo(const QString& hash, quint64 blockNum) : fHash(hash), fBlockNumber(blockNum)
@@ -153,6 +160,9 @@ namespace Etherwall {
             case GasRole: return QVariant(fGas);
             case GasPriceRole: return QVariant(fGasPrice);
             case InputRole: return QVariant(fInput);
+            case NameRole: return QVariant(fName);
+            case ItemRole: return QVariant(fItem);
+            case DescRole: return QVariant(fDesc);
         }
 
         return QVariant();
@@ -174,14 +184,26 @@ namespace Etherwall {
         fHash = hash;
     }
 
-    void TransactionInfo::init(const QString& from, const QString& to, const QString& value, const QString& gas) {
+    void TransactionInfo::init(const QString& from, const QString& to, const QString& value, const QString& gas, const QString& name){
+        //, const QString& name, const QString& item, const QString& desc) {
         fSender = from;
         fReceiver = to;
         fValue = Helpers::formatEtherStr(value);
+        fName = name;
+       // fItem = item;
+       // fDesc = desc;
         if ( !gas.isEmpty() ) {
             fGas = gas;
         }
     }
+
+   /* void TransactionInfo::init(const QString& item1, const QString& item2, const QString& item3, const QString& item4, const QString& item5) {
+        item1 = item1;
+        item2 = item2;
+        item3 = item3;
+        item4 = item4;
+        item5= item5;
+    }*/
 
     const QJsonObject TransactionInfo::toJson(bool decimal) const {
         QJsonObject result;
@@ -190,6 +212,7 @@ namespace Etherwall {
         result["to"] = fReceiver;
         result["blockHash"] = fBlockHash;
         result["input"] = fInput;
+        result["name"] = fName;
 
         if ( decimal ) {
             result["value"] = fValue;
