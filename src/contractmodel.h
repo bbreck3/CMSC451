@@ -97,7 +97,10 @@ namespace Etherwall{
      private:
        EtherIPC& fIpc;
        AccountList fAccountList;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 099452e8305506f3f2695a486526fba629aa7a32
        QString fSelectedAccountRow;
        QString fSelectedAccountRow1;
        QString fSelectedAccountRow2;

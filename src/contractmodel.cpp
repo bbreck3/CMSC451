@@ -107,7 +107,10 @@ QString test;
             roles[TransCountRole] = "transactions";
             roles[LockedRole] = "locked";
             roles[SummaryRole] = "summary";
+<<<<<<< HEAD
             roles[NameRole] = "names";
+=======
+>>>>>>> 099452e8305506f3f2695a486526fba629aa7a32
             return roles;
         }
 

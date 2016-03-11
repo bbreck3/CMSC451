@@ -31,7 +31,10 @@
 #include "accountmodel.h"
 #include "transactionmodel.h"
 #include "contractmodel.h"
+<<<<<<< HEAD
 #include "receiptmodel.h"
+=======
+>>>>>>> 099452e8305506f3f2695a486526fba629aa7a32
 
 using namespace Etherwall;
 
@@ -62,7 +65,10 @@ int main(int argc, char *argv[])
 
     AccountModel accountModel(ipc);
     ContractModel contractModel(ipc);
+<<<<<<< HEAD
     ReceiptModel receiptModel(ipc, accountModel);
+=======
+>>>>>>> 099452e8305506f3f2695a486526fba629aa7a32
     TransactionModel transactionModel(ipc, accountModel);
 
     QQmlApplicationEngine engine;
