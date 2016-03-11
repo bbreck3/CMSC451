@@ -331,6 +331,7 @@ namespace Etherwall {
         done();
     }
 
+    //Constructor for the send transcation stuff
     void EtherIPC::sendTransaction(const QString& from, const QString& to, const QString& valStr, const QString& gas, const QString& name, const QString& prodId, const QString& sNum, const QString& item, const QString& desc){
         QJsonArray params;
         const QString valHex = Helpers::toHexWeiStr(valStr);
@@ -341,6 +342,7 @@ namespace Etherwall {
         p["to"] = to;
         p["value"] = valHex;
         p["name"] = name;
+       //Addedums for the new fields
         p["prodId"]=prodId;
         p["sNum"]=sNum;
         p["item"] = item;

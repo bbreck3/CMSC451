@@ -41,13 +41,14 @@ namespace Etherwall {
         Q_PROPERTY(QString gasPrice READ getGasPrice NOTIFY gasPriceChanged FINAL)
         Q_PROPERTY(QString gasEstimate READ getGasEstimate NOTIFY gasEstimateChanged FINAL)
 
+        //Defines that actions for the Distributor textfields --> signal
+        Q_PROPERTY(QString fName READ getNameStr WRITE setName NOTIFY accountSelectionChanged)
+        Q_PROPERTY(QString fItem READ getItemStr WRITE setItem NOTIFY accountSelectionChanged)
+        Q_PROPERTY(QString fSeriel READ getSerielStr WRITE setSeriel NOTIFY accountSelectionChanged)
+        Q_PROPERTY(QString fCompany READ getCompanyStr WRITE setCompany NOTIFY accountSelectionChanged)
+        Q_PROPERTY(QString fDescription READ getDescriptionStr WRITE setDescription NOTIFY accountSelectionChanged)
 
-        Q_PROPERTY(QString selectedAccountRow READ getSelectedAccountRow WRITE setSelectedAccountRow NOTIFY accountSelectionChanged)
-        Q_PROPERTY(QString selectedAccountRow1 READ getSelectedAccountRow1 WRITE setSelectedAccountRow1 NOTIFY accountSelectionChanged)
-        Q_PROPERTY(QString selectedAccountRow2 READ getSelectedAccountRow2 WRITE setSelectedAccountRow2 NOTIFY accountSelectionChanged)
-        Q_PROPERTY(QString selectedAccountRow3 READ getSelectedAccountRow3 WRITE setSelectedAccountRow3 NOTIFY accountSelectionChanged)
-        Q_PROPERTY(QString selectedAccountRow4 READ getSelectedAccountRow4 WRITE setSelectedAccountRow4 NOTIFY accountSelectionChanged)
-
+        //Defines that actions for the sending of: to , from and amount --> signal
         Q_PROPERTY(QString to READ getToString WRITE setToString NOTIFY accountSelectionChanged)
         Q_PROPERTY(QString from READ getFromString WRITE setFromString NOTIFY accountSelectionChanged)
         Q_PROPERTY(QString amount READ getAmountString WRITE setAmountString NOTIFY accountSelectionChanged)
@@ -107,30 +108,30 @@ namespace Etherwall {
 
 
 
-        QString fSelectedAccountRow;
-        QString fSelectedAccountRow1;
-        QString fSelectedAccountRow2;
-        QString fSelectedAccountRow3;
-        QString fSelectedAccountRow4;
-        QString fSelectedAccount;
+        QString fName;
+        QString fItem;
+        QString fSeriel;
+        QString fCompany;
+        QString fDescription;
+        //QString fSelectedAccount;
 
 
 
-        QString getSelectedAccountRow() const;
-        QString getSelectedAccountRow1() const;
-        QString getSelectedAccountRow2() const;
-        QString getSelectedAccountRow3() const;
-        QString getSelectedAccountRow4() const;
-        void setSelectedAccountRow(QString str1);
-        void setSelectedAccountRow1(QString str2);
-        void setSelectedAccountRow2(QString str3);
-        void setSelectedAccountRow3(QString str4);
-         void setSelectedAccountRow4(QString str5);
-        const QString getSelectedAccount() const;
-        const QString getSelectedAccount1() const;
-        const QString getSelectedAccount2() const;
-        const QString getSelectedAccount3() const;
-        const QString getSelectedAccount4() const;
+        QString getName() const;
+        QString getItem() const;
+        QString getSeriel() const;
+        QString getCompany() const;
+        QString getDescription() const;
+        void setName(QString str1);
+        void setItem(QString str2);
+        void setSeriel(QString str3);
+        void setCompany(QString str4);
+         void setDescription(QString str5);
+        const QString getNameStr() const;
+        const QString getItemStr() const;
+        const QString getSerielStr() const;
+        const QString getCompanyStr() const;
+        const QString getDescriptionStr() const;
 
 
 

@@ -34,6 +34,20 @@ Tab {
         anchors.margins: 20
         spacing: 15
 
+                /**
+
+                        Text Fields that can be prased to pass inforatmion to other code files.
+                        the id is what identifies the textfield and shoudl be called later on the grab that particular
+                           TextField's information
+
+
+                           NOTE:  to make this easier to use and a better UX design. Lables should be added next to each test field.
+                           I could not figure out at the time I was doing this an easy way of doin that that would actually be usefull...
+                            but a way needs to be figured out...
+
+                  */
+
+
                      TextField {
                       id: name
 
@@ -153,28 +167,13 @@ Tab {
                     }
                 }
 
+                // ConfirmDialog --> prompts the user are they sure they want to send the transaction
                 ConfirmDialog {
                     id: confirmDialog
                     msg: qsTr("Confirm Deploy Contract info?")
-
+                    //If yes, pass the textfield information to the transactionModel.cpp for proccessing
                     onYes: {
-                        //var result = transactionWarning.check()
-                       /* if ( result.error !== null ) {
-                            errorDialog.msg = result.error
-                            errorDialog.open()
-                            return
-                        }*/
-                        /*contractModel.selectedAccountRow = items5.text.toString(); //this needs be changed to make sence
-                        contractModel.selectedAccountRow1 = items6.text.toString();
-                        contractModel.selectedAccountRow2 = items7.text.toString();
-                        contractModel.selectedAccountRow3 = items8.text.toString();*/
-
-                        /*transactionModel.sendTransaction(result.from, result.to, result.txtVal, result.txtGas) */
-
-                          //This will be important later on...
-
-                        //transactionModel.sendTransaction(result.from, result.to, result.txtVal, result.txtGas);// items5.text.toString(), items6.text.toString(),items6.text.toString());
-                        transactionModel.sendTransaction(name.text.toString(), prod_id.text.toString(),sNum.text.toString(), company_name.text.toString(),desc.text.toString());
+                          transactionModel.sendTransaction(name.text.toString(), prod_id.text.toString(),sNum.text.toString(), company_name.text.toString(),desc.text.toString());
 
 
                     }
@@ -183,6 +182,7 @@ Tab {
 
             }
 
+            //Buton --> onClick invoke the confirmationDialog to send the information for proccessing
             Row {
                 Layout.columnSpan: 1
                 Button {
@@ -210,6 +210,17 @@ Tab {
         TransactionDetails {
             id: details
         }
+
+        /**
+
+                    This begins the Table where the informration stored.
+                      Each table column has role and a title
+                      The Title simply provide a name to be displayed in order make the list meaning full and readable
+                      The role is th id for that column that can be reference in other code files inorder to add and update column values
+
+
+
+          */
 
         TableView {
             id: transactionView
@@ -276,6 +287,12 @@ Tab {
                 width: 200
             }
             model: transactionModel
+
+            /**
+                Each row can be right clicked to view the deatils of each compoent in a nice pop dialog
+
+
+              */
 
             Menu {
                 id: rowMenu

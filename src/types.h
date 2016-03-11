@@ -131,6 +131,7 @@ namespace Etherwall {
         TransactionIndexRole,
         GasRole,
         GasPriceRole,
+        //Additinos to the table for the HashMap
         InputRole,
         DepthRole,
         NameRole,
@@ -144,6 +145,7 @@ namespace Etherwall {
     class TransactionInfo
     {
     public:
+        //Overloaded methods for the TransactionInfo Class
         TransactionInfo();
         TransactionInfo(const QJsonObject& source);
         TransactionInfo(const QString& hash, quint64 blockNum); // for storing from server reply
@@ -160,10 +162,13 @@ namespace Etherwall {
         const QString getHash() const;
         void setHash(const QString& hash);
        // void init(const QString& from, const QString& to, const QString& value, const QString& gas);//, const QString& name, const QString& item, const QString& desc = QString());
+        //Initialize the transaction for table
         void init(const QString& from, const QString& to, const QString& value, const QString& gas, const QString& name, const QString& item, const QString& seriel,const QString& compnay, const QString& desc);
         const QJsonObject toJson(bool decimal = false) const;
         const QString toJsonString(bool decimal = false) const;
     private:
+
+        //String Definiation for teh table
         QString item1;
         QString item2;
         QString item3;

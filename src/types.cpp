@@ -137,7 +137,8 @@ namespace Etherwall {
         fInput = source.value("input").toString("invalid");
 
 
-        //thi is the line that add the data field to the list on the chart
+        //this is the line that add the data field to the list on the chart
+        //Addendums for the table
         fName = source.value("name").toString("name");
         fItem = source.value("item").toString("item");
         fDesc = source.value("desc").toString("description");
@@ -149,6 +150,7 @@ namespace Etherwall {
     {
     }
 
+    //Know Idea how this contributes but there has to be a definition in this methods for th ecorrect display in the table
     const QVariant TransactionInfo::value(const int role) const {
         switch ( role ) {
             case THashRole: return QVariant(fHash);
@@ -161,6 +163,8 @@ namespace Etherwall {
             case TransactionIndexRole: return QVariant(fTransactionIndex);
             case GasRole: return QVariant(fGas);
             case GasPriceRole: return QVariant(fGasPrice);
+
+            //Addems for new fields
             case InputRole: return QVariant(fInput);
             case NameRole: return QVariant(fName);
             case ItemRole: return QVariant(fItem);
@@ -188,13 +192,15 @@ namespace Etherwall {
         fHash = hash;
     }
 
+    //Contructor for init
     void TransactionInfo::init(const QString& from, const QString& to, const QString& value, const QString& gas, const QString& name,const QString& item,const QString& seriel, const QString& company, const QString& desc){
         //, const QString& name, const QString& item, const QString& desc) {
         fSender = from;
         fReceiver = to;
         fValue = Helpers::formatEtherStr(value);
         fName = name;
-       fItem = item;
+       //Addendums
+        fItem = item;
        fSeriel = seriel;
        fCompany = company;
        fDesc = desc;
@@ -202,14 +208,6 @@ namespace Etherwall {
             fGas = gas;
         }
     }
-
-   /* void TransactionInfo::init(const QString& item1, const QString& item2, const QString& item3, const QString& item4, const QString& item5) {
-        item1 = item1;
-        item2 = item2;
-        item3 = item3;
-        item4 = item4;
-        item5= item5;
-    }*/
 
     const QJsonObject TransactionInfo::toJson(bool decimal) const {
         QJsonObject result;

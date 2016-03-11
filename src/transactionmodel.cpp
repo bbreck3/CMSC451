@@ -45,71 +45,70 @@ namespace Etherwall {
 
 
     /**
-     * @brief ContractModel::getSelectedAccountRow
-     * @return
+     *
      *
      *  TextField input Stuff.....from Distributor
      *
      */
 
 
-    QString TransactionModel::getSelectedAccountRow() const {
-        return fSelectedAccountRow;
+    QString TransactionModel::getName() const {
+        return fName;
     }
 
-    QString TransactionModel::getSelectedAccountRow1() const {
-        return fSelectedAccountRow1;
+    QString TransactionModel::getItem() const {
+        return fItem;
     }
-    QString TransactionModel::getSelectedAccountRow2() const {
-        return fSelectedAccountRow2;
-    }
-
-    QString TransactionModel::getSelectedAccountRow3() const {
-        return fSelectedAccountRow3;
-    }
-    QString TransactionModel::getSelectedAccountRow4() const {
-        return fSelectedAccountRow4;
+    QString TransactionModel::getSeriel() const {
+        return fSeriel;
     }
 
-
-    void TransactionModel::setSelectedAccountRow(QString item) {
-        fSelectedAccountRow = item;
-        qDebug()<< "Debug: item1: -->" << fSelectedAccountRow;
+    QString TransactionModel::getCompany() const {
+        return fCompany;
+    }
+    QString TransactionModel::getDescription() const {
+        return fDescription;
     }
 
-    void TransactionModel::setSelectedAccountRow1(QString item) {
-        fSelectedAccountRow1 = item;
-        qDebug()<< "Debug: item2: -->" << fSelectedAccountRow1;
+
+    void TransactionModel::setName(QString name) {
+        fName = name;
+        qDebug()<< "Debug: Name: -->" << fName;
     }
 
-    void TransactionModel::setSelectedAccountRow2(QString item) {
-        fSelectedAccountRow2 = item;
-        qDebug()<< "Debug: item1: -->" << fSelectedAccountRow2;
+    void TransactionModel::setItem(QString item) {
+        fItem = item;
+        qDebug()<< "Debug: Item: -->" << fItem;
     }
 
-    void TransactionModel::setSelectedAccountRow3(QString item) {
-        fSelectedAccountRow3 = item;
-        qDebug()<< "Debug: item3: -->" << fSelectedAccountRow3;
-    }
-    void TransactionModel::setSelectedAccountRow4(QString item) {
-        fSelectedAccountRow4 = item;
-        qDebug()<< "Debug: item4: -->" << fSelectedAccountRow4;
-    }
-    const QString TransactionModel::getSelectedAccount() const {
-        return fSelectedAccountRow;
-    }
-    const QString TransactionModel::getSelectedAccount1() const {
-        return fSelectedAccountRow1;
+    void TransactionModel::setSeriel(QString seriel) {
+        fSeriel = seriel;
+        qDebug()<< "Debug: seriel: -->" << fSeriel;
     }
 
-    const QString TransactionModel::getSelectedAccount2() const {
-        return fSelectedAccountRow2;
+    void TransactionModel::setCompany(QString company) {
+        fCompany = company;
+        qDebug()<< "Debug: company: -->" << fCompany;
     }
-    const QString TransactionModel::getSelectedAccount3() const {
-        return fSelectedAccountRow3;
+    void TransactionModel::setDescription(QString desc) {
+        fDescription =desc;
+        qDebug()<< "Debug: desc: -->" << fDescription;
     }
-    const QString TransactionModel::getSelectedAccount4() const {
-        return fSelectedAccountRow4;
+    const QString TransactionModel::getNameStr() const {
+        return fName;
+    }
+    const QString TransactionModel::getItemStr() const {
+        return fItem;
+    }
+
+    const QString TransactionModel::getSerielStr() const {
+        return fSeriel;
+    }
+    const QString TransactionModel::getCompanyStr() const {
+        return fCompany;
+    }
+    const QString TransactionModel::getDescriptionStr() const {
+        return fDescription;
     }
 
 
@@ -186,6 +185,7 @@ namespace Etherwall {
         return fGasEstimate;
     }
 
+    //HashMap that maps the id of the Column with the key
     QHash<int, QByteArray> TransactionModel::roleNames() const {
         QHash<int, QByteArray> roles;
         roles[THashRole] = "hash";
@@ -248,8 +248,8 @@ namespace Etherwall {
     }
 
     void TransactionModel::getAccountsDone(const AccountList& list __attribute__((unused))) {
-        //refresh();
-        //loadHistory();
+        //refresh(); --> do not uncommment this, this will reditect the refresh values of the table to a server that does not exists
+        //loadHistory();.... still not certain if this has anythingto do with the reason the the transaction are not stored stored....
     }
 
     void TransactionModel::getBlockNumberDone(quint64 num) {
@@ -277,7 +277,17 @@ namespace Etherwall {
         emit gasEstimateChanged(num);
     }
 
+
+
+   /***
+    *   This is the method responcible for sending the taransaction information to the blockchain:
+    *       NOTE: I have getters in side this method. This is because You should not send information off to the blockchain before you have all the information
+    *       needed. Hence you take in the customer information first: the to , from, amount and gas price as store them temporarily until the distriutor has put their informatio in
+    *       Thus when the sendTranstion method is called, you need  call recall the stored inforamtion inorder to deploy all information about the transaction on the blockchain.
+    *
+    */
     void TransactionModel::sendTransaction(const QString& name, const QString& prod_id, const QString& sNum, const QString& company, const QString& desc){//, const QString& item, const QString& description) {
+       //variable to hold the stored information
         QString from = getFrom();
         QString to = getTo();
         QString gas = getGasPriceStr();
@@ -291,12 +301,31 @@ namespace Etherwall {
         //this is what puts the info to display on the list
         fQueuedTransaction.init(from, to, value, gas, name, prod_id, sNum, company, desc);
     }
+
+    /**
+     * @brief TransactionModel::prepSendTransaction
+     * @param from
+     * @param to
+     * @param value
+     * @param gas
+     *
+     *      prepSendTransaction: onclick from the CustomerTab, sets the current value for teporary storage until needed later on
+     *
+     *
+     */
+
+
     void TransactionModel::prepSendTransaction(const QString& from, const QString& to, const QString& value, const QString& gas){//, const QString& item, const QString& description) {
+
+
+            //setter fro all relevant information
             setToString(to);
             setFromString(from);
             setAmountString(value);
             setGasString(gas);
-            //THis might break it
+
+
+
         qDebug() <<"Debug-->" << from << to << value <<  gas;// <<  name << item << description;
 
 
@@ -331,7 +360,7 @@ namespace Etherwall {
                 storeTransaction(fTransactionList.at(n));
             } else { // external from someone to us
                 /**
-                        The below line is where the information gets added to the table...
+                        The below line is where the list information gets added to the table...
 
 
 
@@ -405,6 +434,8 @@ namespace Etherwall {
         storeTransaction(info);
     }
 
+
+    //this is the method that could be potentially be where the storing the transaction is breaking,,,,
     void TransactionModel::storeTransaction(const TransactionInfo& info) {
         // save to persistent memory for re-run
         const quint64 blockNum = info.value(BlockNumberRole).toULongLong();
@@ -499,6 +530,7 @@ namespace Etherwall {
         return Helpers::weiStrToEtherStr(resultWei);
     }
 
+    //DO NOT UNDER ANYCIRCUMSTANCES UNCOMMNET THIS--> IT WILL BREAK EVERYTHING
     void TransactionModel::loadHistory() {
         // get historical transactions from etherdata
         //QNetworkRequest request(QUrl("http://data.etherwall.com/api/transactions"));

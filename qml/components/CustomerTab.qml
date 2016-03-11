@@ -39,6 +39,14 @@ Tab {
             columns: 4
             width: parent.width
 
+                /**
+
+                  From Field starts here
+
+                 */
+
+            //From label
+
             Label {
                 id: fromLabel
                 text: qsTr("From: ")
@@ -57,6 +65,7 @@ Tab {
                     }
                 }
 
+                   //Button to unlock the selected account
                 ToolButton {
                     id: lockTool
                     iconSource: accountModel.isLocked(fromField.currentIndex) ? "/images/locked" : "/images/unlocked"
@@ -76,7 +85,7 @@ Tab {
                         accountUnlockDialog.openFocused("Unlock " + accountModel.selectedAccount)
                     }
                 }
-
+                //Drop down to select the account
                 ComboBox {
                     id: fromField
                     width: parent.width - lockTool.width
@@ -86,18 +95,18 @@ Tab {
                 }
             }
 
+                /**
+
+                  TO label starts Here
+
+                  */
+            //To label
             Label {
                 id: toLabel
                 text: qsTr("To: ")
             }
-            /*ComboBox {
-                id: toField
-                width: parent.width+40 //- lockTool.width
-                model: accountModel
-                textRole: "summary"
-                onCurrentIndexChanged: transactionWarning.refresh()
-            }*/
 
+            //Text field for the receipt account
            TextField {
                 id: toField
                 validator: RegExpValidator {
@@ -111,6 +120,7 @@ Tab {
                 onTextChanged: transactionWarning.refresh()
             }
 
+            //Checks for various "invalid " things befroe it will allow the transaction to go through
             Row {
                 ToolButton {
                     id: transactionWarning
@@ -190,10 +200,12 @@ Tab {
                     }
                 }
 
+                   //ConfirmDialog --> prompts for confirmation that you want to put the transaction through
                 ConfirmDialog {
                     id: confirmDialog
                     msg: qsTr("Confirm transaction send?")
 
+                    //If yes--> double check that the infomration is valid before you  putthe transaction through
                     onYes: {
                         var result = transactionWarning.check()
                         if ( result.error !== null ) {
@@ -201,21 +213,22 @@ Tab {
                             errorDialog.open()
                             return
                         }
-                        //contractModel.selectedAccountRow = items5.text.toString(); //this needs be changed to make sence
-                        //contractModel.selectedAccountRow1 = items6.text.toString();
-                        //contractModel.selectedAccountRow2 = items7.text.toString();
-                        //contractModel.selectedAccountRow3 = items8.text.toString();
 
-                        /*transactionModel.sendTransaction(result.from, result.to, result.txtVal, result.txtGas) */
+                           /**
 
+                                    If all systems are a go, call the transactionModel class to pass the information from the GUI for processing
 
-                        transactionModel.prepSendTransaction(result.from, result.to, result.txtVal, gasField.text.toString());/// items5.text.toString());//, items6.text.toString(),items6.text.toString());
+                                    Note: this is called "prepSendTransaction: this basically stores the information regarding the to from and amount
+                                    in order to wait for the distributor to proviode his information before actually invoking the transaction
 
+                                        prepSendTransaction takes as parametets: the to address, the from adddres, the amount to be sent, and the gas limit
+                             */
+                        transactionModel.prepSendTransaction(result.from, result.to, result.txtVal, gasField.text.toString());
 
                     }
                 }
 
-
+            }
             }
 
             Row {
@@ -237,6 +250,8 @@ Tab {
                     width: 200
                     onTextChanged: transactionWarning.refresh()
                 }
+
+                //Send button--> on click invokes the ConfirmDialog to send the information to transaction model for processing
                 Button {
                     id: sendButton
                     text: "Send"
@@ -252,17 +267,6 @@ Tab {
                         confirmDialog.open()
                     }
                 }
-
-                /*ToolButton {
-                    iconSource: "/images/all"
-                    width: sendButton.height
-                    height: sendButton.height
-                    tooltip: qsTr("Send all", "send all ether from account")
-                    onClicked: {
-                        valueField.text = transactionModel.getMaxValue(fromField.currentIndex, gasField.text)
-                    }
-                }*/
-            }
 
             // -- estimate is broken in geth 1.0.1- must wait for later release
            Row {
@@ -314,6 +318,18 @@ Tab {
         TransactionDetails {
             id: details
         }
+
+        /**
+
+                    This begins the Table where the informration stored.
+                      Each table column has role and a title
+                      The Title simply provide a name to be displayed in order make the list meaning full and readable
+                      The role is the id for that column that can be reference in other code files inorder to add and update column values
+
+
+
+          */
+
 
         TableView {
             id: transactionView
@@ -380,6 +396,15 @@ Tab {
                 width: 200
             }
             model: transactionModel
+
+
+            /**
+                Each row can be right clicked to view the deatils of each compoent in a nice pop dialog
+
+
+              */
+
+
 
             Menu {
                 id: rowMenu
