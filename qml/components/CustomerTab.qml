@@ -363,9 +363,21 @@ Tab {
             }
             TableViewColumn {
                 horizontalAlignment: Text.AlignRight
+                role: "seriel"
+                title: qsTr("Seriel#")
+                width: 200
+            }
+            TableViewColumn {
+                horizontalAlignment: Text.AlignRight
+                role: "company"
+                title: qsTr("Company")
+                width: 200
+            }
+            TableViewColumn {
+                horizontalAlignment: Text.AlignRight
                 role: "desc"
                 title: qsTr("Description")
-                width: 100
+                width: 200
             }
             model: transactionModel
 

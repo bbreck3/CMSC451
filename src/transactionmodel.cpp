@@ -203,6 +203,8 @@ namespace Etherwall {
         roles[NameRole] = "name";
         roles[ItemRole] = "item";
         roles[DescRole] = "desc";
+        roles[SerielRole] = "seriel";
+        roles[CompanyRole] ="company";
 
         return roles;
     }
@@ -275,18 +277,19 @@ namespace Etherwall {
         emit gasEstimateChanged(num);
     }
 
-    void TransactionModel::sendTransaction(const QString& name, const QString& prod_id, const QString& sNum, const QString& item, const QString& desc){//, const QString& item, const QString& description) {
+    void TransactionModel::sendTransaction(const QString& name, const QString& prod_id, const QString& sNum, const QString& company, const QString& desc){//, const QString& item, const QString& description) {
         QString from = getFrom();
         QString to = getTo();
         QString gas = getGasPriceStr();
         QString value  = getAmount();
 
-        qDebug() <<"Debug-->" << from << to << value <<  gas << name << prod_id << item << desc;// <<  name << item << description;
+        qDebug() <<"Debug-->" << from << to << value <<  gas << name << prod_id << company << desc;// <<  name << item << description;
 
-        fIpc.sendTransaction(from, to, value, gas, name, prod_id, sNum, item,desc);//, name, item, description );
+        //this is what sends the transaction through on the block chain
+        fIpc.sendTransaction(from, to, value, gas, name, prod_id, sNum, company,desc);//, name, item, description );
 
-
-        fQueuedTransaction.init(from, to, value, gas, name);//, name, item, description);
+        //this is what puts the info to display on the list
+        fQueuedTransaction.init(from, to, value, gas, name, prod_id, sNum, company, desc);
     }
     void TransactionModel::prepSendTransaction(const QString& from, const QString& to, const QString& value, const QString& gas){//, const QString& item, const QString& description) {
             setToString(to);

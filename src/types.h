@@ -135,7 +135,9 @@ namespace Etherwall {
         DepthRole,
         NameRole,
         ItemRole,
-        DescRole
+        DescRole,
+        SerielRole,
+        CompanyRole,
 
     };
 
@@ -158,7 +160,7 @@ namespace Etherwall {
         const QString getHash() const;
         void setHash(const QString& hash);
        // void init(const QString& from, const QString& to, const QString& value, const QString& gas);//, const QString& name, const QString& item, const QString& desc = QString());
-        void init(const QString& from, const QString& to, const QString& value, const QString& gas, const QString& name);
+        void init(const QString& from, const QString& to, const QString& value, const QString& gas, const QString& name, const QString& item, const QString& seriel,const QString& compnay, const QString& desc);
         const QJsonObject toJson(bool decimal = false) const;
         const QString toJsonString(bool decimal = false) const;
     private:
@@ -181,6 +183,8 @@ namespace Etherwall {
         QString fName;
         QString fItem;
         QString fDesc;
+        QString fSeriel;
+        QString fCompany;
     };
 
     typedef QList<TransactionInfo> TransactionList;

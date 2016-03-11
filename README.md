@@ -23,11 +23,25 @@ to clean and rebuilt --> clean.sh
 
 Working prototype.....bugs will occur, errors will arrise...
 
+<<<<<<< HEAD
+#Known Bugs
+
+1) Transaction sent albeit confirmed on the blockchain, are not saved in the GUI list--> possible cuplrits: storeTansaction method in transactionmodel.cpp
+
+2) Can verify to, from, amont on blockchain, but cannot verify(proof) the additional items listed in the gui are infact on the blockchain...very strange. I am hoping the fixing issue 1 will yield a fix to this as well.
+
+3) Setting the IPC Path under the Settings tab to a different datadirectory as done before, does not seem to keep both GUI list consistent. This is odd and very conserning for the project
+
+4) There is no instance of genesis.json anywhere in the code....this is concerning
+
+5) inorder to mine you need to go into the terminal and type "miner.start()" and "miner.stop()" respectively...there is no current way to do this directly from the GUI.
+=======
 
 
 
 
 
+>>>>>>> 1bb7e52113fcd671b00215ae806ad7bcbfb1dd54
 
 
 

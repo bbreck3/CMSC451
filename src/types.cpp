@@ -140,7 +140,9 @@ namespace Etherwall {
         //thi is the line that add the data field to the list on the chart
         fName = source.value("name").toString("name");
         fItem = source.value("item").toString("item");
-        fDesc = source.value("item").toString("item");
+        fDesc = source.value("desc").toString("description");
+        fSeriel = source.value("seriel").toString("seriel");
+        fCompany = source.value("company").toString("company");
     }
 
     TransactionInfo::TransactionInfo(const QString& hash, quint64 blockNum) : fHash(hash), fBlockNumber(blockNum)
@@ -163,6 +165,8 @@ namespace Etherwall {
             case NameRole: return QVariant(fName);
             case ItemRole: return QVariant(fItem);
             case DescRole: return QVariant(fDesc);
+            case SerielRole: return QVariant(fSeriel);
+            case CompanyRole: return QVariant(fCompany);
         }
 
         return QVariant();
@@ -184,14 +188,16 @@ namespace Etherwall {
         fHash = hash;
     }
 
-    void TransactionInfo::init(const QString& from, const QString& to, const QString& value, const QString& gas, const QString& name){
+    void TransactionInfo::init(const QString& from, const QString& to, const QString& value, const QString& gas, const QString& name,const QString& item,const QString& seriel, const QString& company, const QString& desc){
         //, const QString& name, const QString& item, const QString& desc) {
         fSender = from;
         fReceiver = to;
         fValue = Helpers::formatEtherStr(value);
         fName = name;
-       // fItem = item;
-       // fDesc = desc;
+       fItem = item;
+       fSeriel = seriel;
+       fCompany = company;
+       fDesc = desc;
         if ( !gas.isEmpty() ) {
             fGas = gas;
         }

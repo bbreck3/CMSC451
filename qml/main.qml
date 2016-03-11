@@ -79,7 +79,7 @@ ApplicationWindow {
 
         AccountsTab {}
 
-        //SettingsTab {}
+        SettingsTab {}
 
         //LogTab {}
 

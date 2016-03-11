@@ -35,41 +35,25 @@ Tab {
         spacing: 15
 
                      TextField {
-                      id: items5
+                      id: name
 
 
                        }
                        TextField {
-                           id: items6
+                           id: prod_id
 
                        }
                        TextField {
-                           id: items7
-
+                           id: sNum
 
                        }
                        TextField {
-                           id: items8
+                           id: company_name
                        }
                        TextField {
-                           id: items9
+                           id: desc
                        }
-                    /* Button{
-                         id: newAccountButton
-                         //id: accountNewDialog //works: changed id
-                         text: qsTr("Debug")
-                          //var input = transactionWarning.check()
-                         //QString name = trascationWarning.check();
-                         onClicked: {
-                            //accountNewDialog.openFocused("New account password")
 
-                            contractModel.selectedAccountRow = items5.text.toString(); //this needs be changed to make sence
-                            contractModel.selectedAccountRow1 = items6.text.toString();
-                            contractModel.selectedAccountRow2 = items7.text.toString();
-                           // contractModel.selectedAccountRow3 =  input.name;//items8.text.toString();
-
-                         }
-                       }*/
 
         GridLayout {
             id: gridLayout
@@ -85,68 +69,10 @@ Tab {
                 Layout.columnSpan: 3
                 Layout.minimumWidth: 600
 
-                /*PasswordDialog {
-                    id: accountUnlockDialog
-                    //standardButtons: StandardButton.Ok | StandardButton.Cancel
 
-                    onAccepted: {
-                        accountModel.unlockAccount(password, settings.value("ipc/accounts/lockduration", 300), fromField.currentIndex)
-                    }
-                }*/
-
-                /*ToolButton {
-                    id: lockTool
-                    iconSource: accountModel.isLocked(fromField.currentIndex) ? "/images/locked" : "/images/unlocked"
-                    width: 24
-                    height: 24
-
-                    Connections {
-                        target: accountModel
-                        onAccountLockedChanged: {
-                            lockTool.iconSource = accountModel.isLocked(fromField.currentIndex) ? "/images/locked" : "/images/unlocked"
-                            transactionWarning.refresh()
-                        }
-                    }
-
-                    onClicked: {
-                        accountModel.selectedAccountRow = fromField.currentIndex
-                        accountUnlockDialog.openFocused("Unlock " + accountModel.selectedAccount)
-                    }
-                }*/
-
-                /*ComboBox {
-                    id: fromField
-                    width: parent.width - lockTool.width
-                    model: accountModel
-                    textRole: "summary"
-                    onCurrentIndexChanged: transactionWarning.refresh()
-                }*/
             }
 
-           /* Label {
-                id: toLabel
-                text: qsTr("To: ")
-            }*/
-            /*ComboBox {
-                id: toField
-                width: parent.width+40 //- lockTool.width
-                model: accountModel
-                textRole: "summary"
-                onCurrentIndexChanged: transactionWarning.refresh()
-            }*/
 
-          /*  TextField {
-                id: toField
-                validator: RegExpValidator {
-                    regExp: /0x[a-f,0-9]{40}/
-                }
-
-                maximumLength: 42
-                Layout.minimumWidth: 600
-                Layout.columnSpan: 3
-
-                onTextChanged: transactionWarning.refresh()
-            }*/
 
             Row {
                 ToolButton {
@@ -248,7 +174,7 @@ Tab {
                           //This will be important later on...
 
                         //transactionModel.sendTransaction(result.from, result.to, result.txtVal, result.txtGas);// items5.text.toString(), items6.text.toString(),items6.text.toString());
-                        transactionModel.sendTransaction(items5.text.toString(), items6.text.toString(),items7.text.toString(), items8.text.toString(),items9.text.toString());
+                        transactionModel.sendTransaction(name.text.toString(), prod_id.text.toString(),sNum.text.toString(), company_name.text.toString(),desc.text.toString());
 
 
                     }
@@ -259,23 +185,6 @@ Tab {
 
             Row {
                 Layout.columnSpan: 1
-
-                /*Label {
-                    text: qsTr("Value: ")
-                }*/
-
-                /*TextField {
-                    id: valueField
-                    validator: DoubleValidator {
-                        bottom: 0.000000000000000001 // should be 1 wei
-                        decimals: 18
-                        locale: "en_US"
-                    }
-
-                    maximumLength: 50
-                    width: 200
-                    onTextChanged: transactionWarning.refresh()
-                }*/
                 Button {
                     id: sendButton
                     text: "Deploy"
@@ -292,58 +201,9 @@ Tab {
                     }
                 }
 
-                /*ToolButton {
-                    iconSource: "/images/all"
-                    width: sendButton.height
-                    height: sendButton.height
-                    tooltip: qsTr("Send all", "send all ether from account")
-                    onClicked: {
-                        valueField.text = transactionModel.getMaxValue(fromField.currentIndex, gasField.text)
-                    }
-                }*/
             }
 
-            // -- estimate is broken in geth 1.0.1- must wait for later release
-           /* Row {
-                Layout.columnSpan: 2
-                Layout.minimumWidth: 450
 
-                Label {
-                    text: qsTr("Gas: ")
-                }
-
-                TextField {
-                    id: gasField
-                    width: 80
-                    text: settings.value("gas", "90000")
-                    validator: IntValidator {
-                        bottom: 0
-                        locale: "en_US"
-                    }
-
-                    onTextChanged: {
-                        settings.setValue("gas", text)
-                    }
-                }
-
-                Label {
-                    text: qsTr("Total: ")
-                }
-
-                TextField {
-                    id: valueTotalField
-                    readOnly: true
-                    maximumLength: 50
-                    width: 200
-                    validator: DoubleValidator {
-                        bottom: 0.000000000000000001 // should be 1 wei
-                        decimals: 18
-                        locale: "en_US"
-                    }
-
-                    text: transactionModel.estimateTotal(valueField.text, gasField.text)
-                }
-            }*/
 
         }
 
@@ -395,13 +255,25 @@ Tab {
                 horizontalAlignment: Text.AlignRight
                 role: "item"
                 title: qsTr("Item")
-                width: 70
+                width: 200
+            }
+            TableViewColumn {
+                horizontalAlignment: Text.AlignRight
+                role: "seriel"
+                title: qsTr("Seriel#")
+                width: 200
+            }
+            TableViewColumn {
+                horizontalAlignment: Text.AlignRight
+                role: "company"
+                title: qsTr("Company")
+                width: 200
             }
             TableViewColumn {
                 horizontalAlignment: Text.AlignRight
                 role: "desc"
                 title: qsTr("Description")
-                width: 100
+                width: 200
             }
             model: transactionModel
 

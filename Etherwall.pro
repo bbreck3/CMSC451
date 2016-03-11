@@ -14,12 +14,8 @@ SOURCES += src/main.cpp \
     src/transactionmodel.cpp \
     src/clipboard.cpp \
     src/etherlog.cpp \
-<<<<<<< HEAD
     src/contractmodel.cpp \
     src/receiptmodel.cpp
-=======
-    src/contractmodel.cpp
->>>>>>> 099452e8305506f3f2695a486526fba629aa7a32
 
 RESOURCES += qml/qml.qrc
 
@@ -47,12 +43,8 @@ HEADERS += \
     src/transactionmodel.h \
     src/clipboard.h \
     src/etherlog.h \
-<<<<<<< HEAD
     src/contractmodel.h \
     src/receiptmodel.h
-=======
-    src/contractmodel.h
->>>>>>> 099452e8305506f3f2695a486526fba629aa7a32
 
 macx {
     ICON=qml/images/icon.icns
