@@ -25,7 +25,7 @@ import QtQuick.Layouts 1.0
 Tab {
     id:receiptTab
     enabled: !ipc.busy && (ipc.connectionState > 0)
-    title: qsTr("Distributer")
+    title: qsTr("Reciept")
 
 
     Column {
@@ -46,24 +46,61 @@ Tab {
                             but a way needs to be figured out...
 
                   */
+		     Row{
 
+			Text{
+			  text:"From : "
+			}
+ 
+		      }
+                      TextField {
 
-                     TextField {
-                      id: name
-
+                      	  id: name
 
                        }
+
+		     Row{
+
+			Text{
+			  text:"To : "
+			}
+ 
+		      }
                        TextField {
+			
                            id: prod_id
 
                        }
+		     Row{
+
+			Text{
+			  text:"Date : "
+			}
+ 
+		      }
                        TextField {
+			
                            id: sNum
 
                        }
+		     Row{
+
+			Text{
+			  text:"Product Order Number : "
+			}
+ 
+		      }
                        TextField {
+	
                            id: company_name
                        }
+		     Row{
+
+			Text{
+			  text:"Product Name : "
+			}
+ 
+		      }
                        TextField {
                            id: desc
                        }
@@ -248,7 +285,7 @@ Tab {
                 horizontalAlignment: Text.AlignRight
                 role: "value"
                 title: qsTr("Value (Ether)")
-                width: 150
+                width: 50
             }
             TableViewColumn {
                 horizontalAlignment: Text.AlignRight
@@ -259,32 +296,32 @@ Tab {
             TableViewColumn {
                 horizontalAlignment: Text.AlignRight
                 role: "name"
-                title: qsTr("Name")
+                title: qsTr("From")
                 width: 70
             }
             TableViewColumn {
                 horizontalAlignment: Text.AlignRight
                 role: "item"
-                title: qsTr("Item")
-                width: 200
+                title: qsTr("To")
+                width: 70
             }
             TableViewColumn {
                 horizontalAlignment: Text.AlignRight
                 role: "seriel"
-                title: qsTr("Seriel#")
-                width: 200
+                title: qsTr("Date")
+                width: 100
             }
             TableViewColumn {
                 horizontalAlignment: Text.AlignRight
                 role: "company"
-                title: qsTr("Company")
+                title: qsTr("Product Order Number")
                 width: 200
             }
             TableViewColumn {
                 horizontalAlignment: Text.AlignRight
                 role: "desc"
-                title: qsTr("Description")
-                width: 200
+                title: qsTr("Product Name")
+                width: 150
             }
             model: transactionModel
 

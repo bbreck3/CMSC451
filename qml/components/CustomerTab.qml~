@@ -25,7 +25,7 @@ import QtQuick.Layouts 1.0
 Tab {
     id: transactionsTab
     enabled: !ipc.busy && (ipc.connectionState > 0)
-    title: qsTr("Transaction")
+    title: qsTr("Customer")
 
 
     Column {
