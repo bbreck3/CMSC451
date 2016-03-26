@@ -93,7 +93,9 @@ namespace Etherwall {
         void deleteAccount(const QString& hash, const QString& password, int index);
         void getBlockNumber();
         void getPeerCount();
-        void sendTransaction(const QString& from, const QString& to, const QString& valStr, const QString& gas = QString());
+        //void sendTransaction(const QString& from, const QString& to, const QString& valStr, const QString& gas);//, const QString& item, const QString& name, const QString& description = QString());
+        //from, to, amount, gas, name, prod_id, sNum, item,desc
+        void sendTransaction(const QString& from, const QString& to, const QString& value, const QString& gas, const QString& name, const QString& prodId, const QString& sNum, const QString& item, const QString& desc);
         void unlockAccount(const QString& hash, const QString& password, int duration, int index);
         void getGasPrice();
         void estimateGas(const QString& from, const QString& to, const QString& value);

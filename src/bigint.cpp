@@ -1030,7 +1030,7 @@ BigInt::Vin::Vin (BigInt::Ulong i_unit)
 BigInt::Vin::Vin (const std::string& i_arg, std::size_t i_digitBase)
 {
     bool rc = initViaString (i_arg, i_digitBase);
-    ASSERTION (rc);
+    //ASSERTION (rc);
 }
 
 // ------------------
@@ -1039,7 +1039,7 @@ BigInt::Vin::Vin (const BigInt::Rossi& i_arg)
 {
     const std::string str (i_arg.toStrHex ());
     bool rc = initViaString (str, HEX_DIGIT);
-    ASSERTION (rc);
+   //ASSERTION (rc);
 }
 
 
@@ -1052,7 +1052,7 @@ long double BigInt::Vin::toDouble () const
 		return static_cast<long double>(0);
     }
 
-    ASSERTION (!m_units.empty());
+   // ASSERTION (!m_units.empty());
 
     // --------------
 	double ret = 0.0;
@@ -1153,7 +1153,7 @@ bool BigInt::Vin::initViaString (const std::string& i_arg, std::size_t i_digitBa
 
                     ERR_MSG (std::cerr, ossErr.str());
               
-                    ASSERTION (0);
+                    //ASSERTION (0);
                     return false; // unused
                 }
                 break;
@@ -1175,13 +1175,13 @@ bool BigInt::Vin::initViaString (const std::string& i_arg, std::size_t i_digitBa
                             << std::endl;
 
                     ERR_MSG (std::cerr, ossErr.str());
-                    ASSERTION (0);
+                    //ASSERTION (0);
                     return false; // unused
                 }
                 break;
 
             default:
-                ASSERTION (0);
+                //ASSERTION (0);
                 return false;
                 break; // unused
         }  // switch (i_digitBase)
@@ -1387,7 +1387,7 @@ bool BigInt::Vin::operator< (const BigInt::Vin& i_arg) const
         return false;
     }
 
-    ASSERTION (m_units.size() == i_arg.m_units.size());
+    //ASSERTION (m_units.size() == i_arg.m_units.size());
     for (std::size_t i = (m_units.size() - 1); i > 0; i--)
     {
         if (m_units[i] < i_arg.m_units[i])
@@ -1543,7 +1543,7 @@ void BigInt::Vin::showUnits(std::ostream& o_stream) const
 // Constructor-0
 BigInt::Rossi::Rossi () 
 {
-    ASSERTION(isEmpty());
+    //ASSERTION(isEmpty());
 }
 
 
@@ -1551,7 +1551,7 @@ BigInt::Rossi::Rossi ()
 // Constructor-1
 BigInt::Rossi::Rossi (BigInt::Ulong i_unit) 
 {
-    ASSERTION (m_units.empty());
+    //ASSERTION (m_units.empty());
     m_units.push_back (i_unit);
 }
 
@@ -1561,7 +1561,7 @@ BigInt::Rossi::Rossi (BigInt::Ulong i_unit)
 BigInt::Rossi::Rossi (const std::string& i_arg, std::size_t i_digitBase) 
 {
     const bool rc = initViaString (i_arg, i_digitBase);
-    ASSERTION (rc);
+    //ASSERTION (rc);
 }
 
 
@@ -1573,7 +1573,7 @@ BigInt::Rossi::Rossi (const BigInt::Vin& i_arg)
     std::ostringstream oss;
     oss << i_arg;
     const bool rc = initViaString (oss.str(), DEC_DIGIT);
-    ASSERTION (rc);
+    //ASSERTION (rc);
 }
 
 
@@ -1581,7 +1581,7 @@ BigInt::Rossi::Rossi (const BigInt::Vin& i_arg)
 // Constructor-4
 BigInt::Rossi::Rossi (const std::size_t i_noOfUnits, BigInt::Ulong i_internalUnits, BigInt::Ulong i_backUnit, const std::string& i_msg)
 {
-    ASSERTION (m_units.empty());
+    //ASSERTION (m_units.empty());
 
     try
     {
@@ -1615,7 +1615,7 @@ long double BigInt::Rossi::toDouble () const
 		return static_cast<long double>(0);
     }
 
-    ASSERTION (!m_units.empty());
+    //ASSERTION (!m_units.empty());
 
     // --------------
 	long double ret = 0.0;
@@ -1660,7 +1660,7 @@ BigInt::Rossi BigInt::Rossi::fromDouble (const long double& i_double)
 // ------------------
 BigInt::Ulong BigInt::Rossi::toUlong () const
 {
-    ASSERTION (!m_units.empty());
+    //ASSERTION (!m_units.empty());
     if (m_units.size() > 1)
     {
         std::ostringstream ossErr;

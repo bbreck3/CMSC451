@@ -72,17 +72,17 @@ ApplicationWindow {
         id: tabView
         anchors.fill: parent
 
-        AccountsTab {}
 
-        TransactionsTab {}
+       AccountsTab {}
+       CustomerTab {}
+        DistributorTab{}
+        //AccountsTab {}
 
         SettingsTab {}
 
-        LogTab {}
+        //LogTab {}
 
-        ReceiptsTab {}
-
-        ContractTab {}
+       // ContractTab {}
     }
 
     statusBar: StatusBar {

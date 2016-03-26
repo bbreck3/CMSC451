@@ -4,14 +4,16 @@
         <file>components/ErrorDialog.qml</file>
         <file>components/PasswordDialog.qml</file>
         <file>components/AccountsTab.qml</file>
-        <file>components/TransactionsTab.qml</file>
         <file>components/SettingsTab.qml</file>
         <file>components/ConfirmDialog.qml</file>
         <file>components/BaseDialog.qml</file>
         <file>components/LogTab.qml</file>
         <file>components/TransactionDetails.qml</file>
-        <file>components/ReceiptsTab.qml</file>
         <file>components/ContractTab.qml</file>
+        <file>components/Distributor.qml</file>
+        <file>components/DistributorTab.qml</file>
+        <file>components/Customer.qml</file>
+        <file>components/CustomerTab.qml</file>
     </qresource>
     <qresource prefix="/images">
         <file alias="icon">images/icon.png</file>

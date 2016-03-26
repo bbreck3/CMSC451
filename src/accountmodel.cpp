@@ -45,6 +45,9 @@ namespace Etherwall {
         roles[TransCountRole] = "transactions";
         roles[LockedRole] = "locked";
         roles[SummaryRole] = "summary";
+        roles[NNameRole]="name";
+        roles[SSerielRole]="seriel";
+        roles[CCompanyRole]="company";
         return roles;
     }
 
@@ -63,6 +66,7 @@ namespace Etherwall {
         i1 = -1;
         i2 = -1;
         int i = 0;
+
         foreach ( const AccountInfo& a, fAccountList ) {
             const QString addr = a.value(HashRole).toString();
             if ( addr == from ) {
@@ -72,6 +76,7 @@ namespace Etherwall {
             if ( addr == to ) {
                 i2 = i;
             }
+
             i++;
         }
 

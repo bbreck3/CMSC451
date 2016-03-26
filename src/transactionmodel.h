@@ -40,6 +40,23 @@ namespace Etherwall {
         Q_PROPERTY(quint64 blockNumber READ getBlockNumber NOTIFY blockNumberChanged FINAL)
         Q_PROPERTY(QString gasPrice READ getGasPrice NOTIFY gasPriceChanged FINAL)
         Q_PROPERTY(QString gasEstimate READ getGasEstimate NOTIFY gasEstimateChanged FINAL)
+
+        //Defines that actions for the Distributor textfields --> signal
+        Q_PROPERTY(QString fName READ getNameStr WRITE setName NOTIFY accountSelectionChanged)
+        Q_PROPERTY(QString fItem READ getItemStr WRITE setItem NOTIFY accountSelectionChanged)
+        Q_PROPERTY(QString fSeriel READ getSerielStr WRITE setSeriel NOTIFY accountSelectionChanged)
+        Q_PROPERTY(QString fCompany READ getCompanyStr WRITE setCompany NOTIFY accountSelectionChanged)
+        Q_PROPERTY(QString fDescription READ getDescriptionStr WRITE setDescription NOTIFY accountSelectionChanged)
+
+        //Defines that actions for the sending of: to , from and amount --> signal
+        Q_PROPERTY(QString to READ getToString WRITE setToString NOTIFY accountSelectionChanged)
+        Q_PROPERTY(QString from READ getFromString WRITE setFromString NOTIFY accountSelectionChanged)
+        Q_PROPERTY(QString amount READ getAmountString WRITE setAmountString NOTIFY accountSelectionChanged)
+        Q_PROPERTY(QString gas READ getGasString WRITE setGasString NOTIFY accountSelectionChanged)
+
+
+
+
     public:
         TransactionModel(EtherIPC& ipc, const AccountModel& accountModel);
         quint64 getBlockNumber() const;
@@ -63,12 +80,17 @@ namespace Etherwall {
         void getGasPriceDone(const QString& num);
         void estimateGasDone(const QString& num);
         void sendTransactionDone(const QString& hash);
-        void sendTransaction(const QString& from, const QString& to, const QString& value, const QString& gas = QString());
+        //temporarily holds infor until distrubtor adds his information
+        void prepSendTransaction(const QString& from, const QString& to, const QString& value, const QString& gas);// const QString& name, const QString& item, const QString& desc = QString());
+        // deploys all information to blockchain
+        //void sendTransaction(const QString& from, const QString& to, const QString& value, const QString& gas, const QString& name, const QString& prod_id, const QString& sNum, const QString& item, const QString desc=QString());
+         void sendTransaction(const QString& name, const QString& prod_id, const QString& sNum, const QString& item, const QString& desc);
         void newTransaction(const TransactionInfo& info);
         void newBlock(const QJsonObject& block);
         void refresh();
         void loadHistoryDone(QNetworkReply* reply);
     signals:
+        void accountSelectionChanged(int);
         void blockNumberChanged(quint64 num);
         void gasPriceChanged(const QString& price);
         void gasEstimateChanged(const QString& price);
@@ -76,6 +98,72 @@ namespace Etherwall {
     private:
         EtherIPC& fIpc;
         const AccountModel& fAccountModel;
+
+        /**
+
+                TextFields for distributor
+
+
+         */
+
+
+
+        QString fName;
+        QString fItem;
+        QString fSeriel;
+        QString fCompany;
+        QString fDescription;
+        //QString fSelectedAccount;
+
+
+
+        QString getName() const;
+        QString getItem() const;
+        QString getSeriel() const;
+        QString getCompany() const;
+        QString getDescription() const;
+        void setName(QString str1);
+        void setItem(QString str2);
+        void setSeriel(QString str3);
+        void setCompany(QString str4);
+         void setDescription(QString str5);
+        const QString getNameStr() const;
+        const QString getItemStr() const;
+        const QString getSerielStr() const;
+        const QString getCompanyStr() const;
+        const QString getDescriptionStr() const;
+
+
+
+        /***
+         *              Temp storage for Customerstuf: to from amount....etc
+         *
+         *
+         */
+
+            QString fto;
+            QString ffrom;
+            QString famount;
+            QString fgas;
+
+            QString getToString() const;
+            QString getFromString() const;
+            QString getAmountString() const;
+            QString getGasString() const;
+          //  QString getSelectedAccountRow3() const;
+            void setToString(QString row);
+            void setFromString(QString row);
+            void setAmountString(QString row);
+            void setGasString(QString gas);
+          //  void setSelectedAccountRow3(QString row);
+            const QString getTo() const;
+            const QString getFrom() const;
+            const QString getAmount() const;
+            const QString getGasPriceStr() const;
+           // const QString getFrom() const;
+
+
+
         TransactionList fTransactionList;
         quint64 fBlockNumber;
         QString fGasPrice;

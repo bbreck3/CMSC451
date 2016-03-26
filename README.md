@@ -1,3 +1,30 @@
+
+#Instructions
+
+To build / rum--> make.sh 
+You may need to install some prequisites
+Follow the errors, it will tell you...just google them and install
+
+to clean and rebuilt --> clean.sh
+
+#Overview
+
+3 tabs:
+1) Distributor
+2) Customer
+3) Accounts
+
+2) THe Customer selects the where he wants his funds to go, which account he is going to use to pay and enters an amount. Once the transaction information is recorded, is then sent to a tempory Queue that is waiting for the Distributor to plugin needed information abotu the product purchase.
+
+1) The Distributor inputs the needed information and then clicks deploy. Once deployed the distributor information is then combined with the ciustomer information and deployed on the blockchain to which all onformation is accessible publically for display.
+
+3) Accounts is just there to see an overview of all accounts
+
+Working prototype.....bugs will occur, errors will arrise...
+
+
+ 
+# Credits Below
 # etherwall
 
 Ethereum QT5 Wallet

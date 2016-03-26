@@ -97,7 +97,10 @@ namespace Etherwall {
         HashRole,
         BalanceRole,
         TransCountRole,
-        SummaryRole
+        SummaryRole,
+        NNameRole,
+        CCompanyRole,
+        SSerielRole
     };
 
     class AccountInfo
@@ -115,6 +118,10 @@ namespace Etherwall {
         QString fHash;
         QString fBalance; // in ether
         quint64 fTransCount;
+        QString fName;
+        QString fCompany;
+        QString fSeriel;
+        QString fDesc;
         bool fLocked;
     };
 
@@ -131,26 +138,49 @@ namespace Etherwall {
         TransactionIndexRole,
         GasRole,
         GasPriceRole,
+        //Additinos to the table for the HashMap
         InputRole,
-        DepthRole
+        DepthRole,
+        NameRole,
+        ItemRole,
+        DescRole,
+        SerielRole,
+        CompanyRole,
+
     };
 
     class TransactionInfo
     {
     public:
+        //Overloaded methods for the TransactionInfo Class
         TransactionInfo();
         TransactionInfo(const QJsonObject& source);
         TransactionInfo(const QString& hash, quint64 blockNum); // for storing from server reply
+        TransactionInfo(const QString& item1,QString& item2, QString& item3, QString& item4, QString item5);
+        TransactionInfo(const QString& from, const QString& to, const QString& value, const QString& gas, const QString& name, const QString& item, const QString& desc);
+        TransactionInfo(const QString& from, const QString& to, const QString& value, const QString& gas, const QString& name);
+        TransactionInfo(const QString& from, const QString& to, const QString& value, const QString& gas);
+
+
 
         const QVariant value(const int role) const;
         quint64 getBlockNumber() const;
         void setBlockNumber(quint64 num);
         const QString getHash() const;
         void setHash(const QString& hash);
-        void init(const QString& from, const QString& to, const QString& value, const QString& gas = QString());
+       // void init(const QString& from, const QString& to, const QString& value, const QString& gas);//, const QString& name, const QString& item, const QString& desc = QString());
+        //Initialize the transaction for table
+        void init(const QString& from, const QString& to, const QString& value, const QString& gas, const QString& name, const QString& item, const QString& seriel,const QString& compnay, const QString& desc);
         const QJsonObject toJson(bool decimal = false) const;
         const QString toJsonString(bool decimal = false) const;
     private:
+
+        //String Definiation for teh table
+        QString item1;
+        QString item2;
+        QString item3;
+        QString item4;
+        QString item5;
         QString fHash;
         quint64 fNonce;
         QString fSender;
@@ -162,6 +192,11 @@ namespace Etherwall {
         QString fGas;
         QString fGasPrice;
         QString fInput;
+        QString fName;
+        QString fItem;
+        QString fDesc;
+        QString fSeriel;
+        QString fCompany;
     };
 
     typedef QList<TransactionInfo> TransactionList;

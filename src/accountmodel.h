@@ -70,10 +70,19 @@ namespace Etherwall {
         EtherIPC& fIpc;
         AccountList fAccountList;
         int fSelectedAccountRow;
+        int fSelectedAccountRow1;
+        int fSelectedAccountRow2;
+        int fSelectedAccountRow3;
         QString fSelectedAccount;
 
         int getSelectedAccountRow() const;
+        int getSelectedAccountRow1() const;
+        //int getSelectedAccountRow2() const;
+        //int getSelectedAccountRow3() const;
         void setSelectedAccountRow(int row);
+        void setSelectedAccountRow1(int row);
+        //void setSelectedAccountRow2(int row);
+        //void setSelectedAccountRow3(int row);
         const QString getSelectedAccount() const;
     };
 
