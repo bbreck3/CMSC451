@@ -14,7 +14,7 @@ to clean and rebuilt --> clean.sh
 2) Customer
 3) Accounts
 
-2) THe Customer selects the where he wants his funds to go, which account he is going to use to pay and enters an amount. Once the transaction information is recorded, is then sent to a tempory Queue that is waiting for the Distributor to plugin needed information abotu the product purchase.
+2) THe Customer selects the where he wants his funds to go, which account he is going to use to pay and enters an amount. Once the transaction information is recorded, is then sent to a tempory Queue that is waiting for the Distributor to plugin needed information about the product purchase.
 
 1) The Distributor inputs the needed information and then clicks deploy. Once deployed the distributor information is then combined with the ciustomer information and deployed on the blockchain to which all onformation is accessible publically for display.
 
